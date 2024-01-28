@@ -8,7 +8,7 @@ Current Version allows config of city, regional or federal positions.
 Players can enter their characters to run for a single office and vote. 
 Election results are done via command but cleaning up for the next election is currently done via SQL script
 
-Support DM hannibal_lickedher
+Support DM hannibal_lickedher on Discord
 
 Next Version:
 -Election "ending" automation based on config
