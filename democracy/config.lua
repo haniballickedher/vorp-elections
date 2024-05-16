@@ -7,7 +7,7 @@ Config.ElectionOfficials={
 }
 
 Config.Webhooks={
-    URL ='https://discord.com/api/webhooks/1173541346267635732/z25dUy4f0eGI2_yLlqlzqTlNoOg5zzKRcl__cEka2HNE9y1NPyip5T2htm5-0VDfToEc',
+    URL ='',
     Color = '16711680',
     WebhookName = 'Election Bot',
     WebhookLogo = ''
