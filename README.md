@@ -20,3 +20,4 @@ Support DM hannibal_lickedher on Discord
 Next Version:
 -Election "ending" automation based on config
 -Results stored for the purposes of term limits
+-Languages file needs to be added

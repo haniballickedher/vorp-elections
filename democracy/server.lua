@@ -157,14 +157,14 @@ AddEventHandler('addballotname', function(city,region,position)
 
     }
   )
- --[[  local title= playername.."is running for office!"
+  local title = playername.."is running for office!"
   local description = playername.." entered the race for "..position.." of "..city..", "..region
-  SendToDiscordWebhook(title,description) ]]
+  SendToDiscordWebhook(title,description)
+
 end)
 
 RegisterServerEvent('cleanupScript')
 AddEventHandler('cleanupScript', function()
-  
   MySQL.Async.execute('DELETE from Ballot', {})
   MySQL.Async.execute('DELETE from Ballot_votes', {})
   MySQL.Async.execute('DELETE from ballot_registration', {})
@@ -249,6 +249,11 @@ AddEventHandler('addNewVote', function(city, region, position, jurisdiction, can
       query = 'INSERT INTO ballot_votes (voterID, ballotID, office, jurisdiction, location) VALUES (@voterID, @ballotID, @position, @jurisdiction, @location) '
       queryParams = {['@voterID'] = charId, ['@ballotID'] =ballotid, ['@position'] = position, ['jurisdiction'] = jurisdiction,['location'] = location }
       MySQL.Async.execute(query, queryParams)
+
+
+      local title = playername.."has Voted!"
+      local description = playername.." voted for  "..position.." of "..location
+      SendToDiscordWebhook(title,description)
 end)
 
 
@@ -273,24 +278,35 @@ AddEventHandler('updateVote', function(city, region, position, jurisdiction, can
       query = 'Update ballot_votes set ballotID = @ballotid where voterID= @voterID AND office= @position and location = @location'
       queryParams = {['@ballotid'] =ballotid, ['@voterID'] = charId, ['@position'] = position, ['location'] = location }
       MySQL.Async.execute(query, queryParams)
+
+      local title = playername.."changed vote!"
+      local description = playername.." voted for  "..position.." of "..location
+      SendToDiscordWebhook(title,description)
       
 end)
 
+function isElectionOfficial(identifier)
+  for _, official in ipairs(Config.ElectionOfficials) do
+      if official[1] == identifier then
+          return true
+      end
+  end
+  return false
+end
 
 
 RegisterServerEvent('openelectionresultsmenu')
 AddEventHandler('openelectionresultsmenu', function()
-  local _source = source
-    local user = VorpCore.getUser(_source) 
-    if user.getGroup~='admin' then
-      TriggerClientEvent("vorp:TipBottom", _source, ('Election Officals Only'), 4000)
+    local _source = source
+    local user = VorpCore.getUser(_source)
+    
+    if user.getGroup() == 'admin' or isElectionOfficial(user.getJob()) then
+        TriggerClientEvent("vorp:TipBottom", _source, ('Welcome Election Official'), 4000)
+        TriggerClientEvent("democracy:openElecResMenu", _source)
     else
-      TriggerClientEvent("vorp:TipBottom", _source, ('Welcome Election Official'), 4000)
-      TriggerClientEvent("democracy:openElecResMenu", _source)
+        TriggerClientEvent("vorp:TipBottom", _source, ('Election Officials Only'), 4000)
     end
-  
 end)
-
 
 
 VORP.addNewCallBack("democracy:getResults", function(source, cb, params)
@@ -330,7 +346,6 @@ end)
     local color = k.Color
     local name = k.WebhookName
     local logo = k.WebhookLogo
-
     VORP.AddWebhook(title, webhook, description, color, name, logo)
   end
 end 

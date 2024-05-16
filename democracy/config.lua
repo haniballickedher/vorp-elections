@@ -1,9 +1,9 @@
 Config = {}
    
     
---This not yet functional either
+--Job name for elections allowed folks.  Admin is allowed to run results by default
 Config.ElectionOfficials={
-   {'electionofficial','admin'}
+   {'electionofficial'}
 }
 
 Config.Webhooks={
