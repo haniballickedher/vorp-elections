@@ -324,7 +324,7 @@ VORP.addNewCallBack("democracy:getResults", function(source, cb, params)
   end)
 end)
 
---[[ function  SendToDiscordWebhook(title, description)
+ function  SendToDiscordWebhook(title, description)
   for k, v in pairs(Config.Webhooks) do 
     local webhook = k.URL
     local color = k.Color
@@ -333,5 +333,5 @@ end)
 
     VORP.AddWebhook(title, webhook, description, color, name, logo)
   end
-end ]]
+end 
 
