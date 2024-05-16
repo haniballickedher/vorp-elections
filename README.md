@@ -8,7 +8,7 @@ Election results are done via command but cleaning up for the next election is c
 
 Setup :
 Add the elections folder to your resources
-Add "ensure elections" to your config
+Add "ensure democracy" to your config
 Run setup.SQL on your db.
 
 Command to see election results is \electionresults
